@@ -4,9 +4,6 @@ pipeline {
     stage('build') {
       steps {
         echo 'this is the build job'
-        echo %JAVA_HOME% 
-        echo %JRE_HOME%
-        echo %MAVEN_HOME% yields
         sh 'mvn compile'
       }
     }
