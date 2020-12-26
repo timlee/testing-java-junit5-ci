@@ -1,38 +1,35 @@
-pipeline{
-
-    agent any
-
-    tools{
-       maven 'Maven 3.6.3' 
+pipeline {
+  agent any
+  stages {
+    stage('build') {
+      steps {
+        echo 'this is the build job'
+        sh 'mvn compile'
+      }
     }
-  
 
-    stages{
-        stage('one'){
-            steps{
-                echo 'this is the first job'
-                sleep 4
-            }
-        }
-        stage('two'){
-            steps{
-                echo 'this is the second job'
-                sleep 9
-            }
-        }
-        stage('three'){
-            steps{
-                echo 'this is the third job'
-                sleep 7
-            }
-        }
+    stage('test') {
+      steps {
+        echo 'this is the test job'
+        sh 'mvn clean test'
+      }
     }
-    
-    post{
-        always{
-            echo 'this pipeline has completed...'
-        }
-        
+
+    stage('package') {
+      steps {
+        echo 'this is the package job'
+        sh 'mvn package -DskipTests'
+      }
     }
-    
+
+  }
+  tools {
+    maven 'mvn'
+  }
+  post {
+    always {
+      echo 'this pipeline has completed...'
+    }
+
+  }
 }
